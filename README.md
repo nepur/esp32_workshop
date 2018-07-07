@@ -1,8 +1,23 @@
-# ESP8266_12E Workshop
-Workshop exercises for the ESP8266 12E (NodeMCU 1.0)
+# ESP32 Workshop
+Workshop exercises for the ESP32 (DoIt v1.0)
 
-This workshop is based around the ESP8266 ESP-12E using Arduino versus NodeMCU (Lua) build that comes on it from the factory.
-Arduino on ESP 12-E.  This will work very similarly to other arduinos.
+This workshop is based around the ESP32 using Arduino versus NodeMCU (Lua) build that comes on it from the factory.
+Arduino on ESP 32.  This will work very similarly to other arduinos.
+
+A good tutorial from which this setup is derived can be found [here.](http://www.instructables.com/id/Getting-Started-With-ESP32-on-a-Mac-Blink-and-LED/)
+
+Another good tutorial which shows how to wire up the pinout for the OLED used in this lab [here.](https://blog.squix.org/weatherstation-wiring-and-first-run)
+
+##Background on this board
+Hardware and firmware information for this board can be found here:
+1. The DoIt Wiki captures information on this board [here.](https://github.com/SmartArduino/SZDOITWiKi/wiki/ESP8266---ESP32)
+2. Esp32 Arduino information can be found [here.](https://github.com/espressif/arduino-esp32)
+3. The original Lua repo is [here.](https://github.com/Nicholas3388/LuaNode)
+4. The low level development framework can be found [here.](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html)
+
+Background on the two OLED driver libraries we will use - the OLED uses the SSD1306 chip:
+1. The first is [here.]The u8g2 library is [here.](https://github.com/olikraus/u8g2) or the older version [here.](https://github.com/olikraus/u8glib)
+2. The second is using the Adafruit SSD1306 library.  Include Adafruit_SSD1306.h file (located in your libraries folder after you import them in) and take out the comment slashes // for #define SSD1306_128_64 so when you compile you don't get the error.  An example [here.](https://github.com/adafruit/Adafruit_SSD1306/blob/master/examples/ssd1306_128x64_i2c/ssd1306_128x64_i2c.ino) and switch out line 61 to initialize with 0x3C if its the 128x32 vs the 128x64 - display.begin(SSD1306_SWITCHCAPVCC, 0x3C); otherwise leave it for the 128x64 display. 
 
 ##Verify that your board works
 Out of the box the NodeMCU 1.0 can be tested with the default NodeLua 1.0 build.  This will verify that the hardware and WiFi is working correctly:
@@ -14,17 +29,15 @@ Out of the box the NodeMCU 1.0 can be tested with the default NodeLua 1.0 build.
 
 ##Software Prerequisites
 
-1. If using the latest Node MCU 1.0 ESP-12E from DoIt, you will need to ensure you have the CH341 driver installed.  This board uses the CH341 USB driver.
-* For Mac you can find the kext signed package [here](packages/CH34x_Install-KextSigned-Mac)
-* For Windows you can find the kext signed package [here](packages) and download 'CH341SER-Windows.zip'
-* The original place these drivers were uploaded are [here.](http://blog.sengotta.net/wp-content/uploads/2015/11/CH34x_Install.zip)
+1. If using the rev 1.0 ESP32 from DoIt, you will need to ensure you have the Silicon Labs CP2102 driver installed.
+* The original place these drivers were uploaded are [here.](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 
-2. If you already have Arduino IDE installed make sure you upgrade to 1.6.7.  If not download from arduino.cc the [latest arduino IDE](https://www.arduino.cc/en/Main/Software) and install it.
+2. If you already have Arduino IDE installed make sure you upgrade to 1.8.5.  If not download from arduino.cc the [latest arduino IDE](https://www.arduino.cc/en/Main/Software) and install it.
 
-3. Launch the Arduino IDE and let's make sure you have the right board support package for the ESP-12E.  
-* In the Arduino menu select Preferences and enter the following url: ~~`http://arduino.esp8266.com/staging/package_esp8266com_index.json`~~  `http://arduino.esp8266.com/stable/package_esp8266com_index.json` in the Additional Boards Manager URL's box.  ![Board JSON](content/BSPjsonurl.png) 
+3. Launch the Arduino IDE and let's make sure you have the right board support package for the ESP32.  
+* In the Arduino menu select Preferences and enter the following url: ~~`http://arduino.esp8266.com/staging/package_esp8266com_index.json`~~  `https://dl.espressif.com/dl/package_esp32_dev_index.json` in the Additional Boards Manager URL's box.  ![Board JSON](content/BSPjsonurl.png) 
 * Save and close the dialog
-* In the Arduino IDE goto Tools->Boards->'Board Manager' and then in list scroll down and select esp8266 and choose install. ![BoardManager](content/ESPBSP.png)
+* In the Arduino IDE goto Tools->Boards->'Board Manager' and then in list scroll down and select ESP32 and choose install. ![BoardManager](content/ESPBSP.png)
 * Make sure to restart the IDE
 * Make sure to select the proper board.  Select the Tools->Boards->'nodeMCU 1.0'  (for the bangood board or others per what you have selected) ![NodeMCU1](content/NodeMCU1.png)
 * Select the port corresponding to the wcuusb port and ensure the baud rate is 115200 (and other specs are set per the screenshot).  ![Portselect](content/Portselect.png)
